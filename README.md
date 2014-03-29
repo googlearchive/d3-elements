@@ -1,10 +1,10 @@
-d3-element
-===================
+d3-elements
+===========
 
-See the [component page](http://polymerlabs.github.io/d3-element) for more information.
+See the [component page](http://polymerlabs.github.io/d3-elements) for more information.
 
 d3-import
-==================
+=========
 
 Import files are a new invention, so libraries like [`d3`](http://bugzu.github.io/reD3/) do not yet provide them.
 

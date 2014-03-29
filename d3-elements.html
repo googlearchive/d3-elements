@@ -1,0 +1,119 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="d3-import.html">
+
+<!--
+Base element for `d3` loader elements.
+
+Element wrapper for the `d3` (http://d3js.org/) library.
+
+@class d3-loader-base
+@blurb Base element for `d3` loader elements.
+@status alpha
+@snap snap.png
+-->
+<polymer-element name="d3-loader-base" attributes="url data accessor">
+
+  <template>
+
+    <style>
+      :host {
+        display: none;
+      }
+    </style>
+
+  </template>
+
+  <script>
+
+    Polymer('d3-loader-base', {
+
+      loadEvent: 'd3-load',
+      errorEvent: 'd3-error',
+      accessorEvent: 'd3-accessor',
+
+      urlChanged: function() {
+        if (this.url) {
+          this.sendRequest();
+        }
+      },
+
+      accessor: function(d) {
+        this.fire(this.accessorEvent, d).detail;
+        return d;
+      },
+
+      receive: function(error, rows) {
+        if (error) {
+          this.error(error);
+        } else {
+          this.load(rows);
+        }
+      },
+
+      error: function(error) {
+        this.lastError = error;
+        this.fire(this.errorEvent, this);
+      },
+
+      load: function(rows) {
+        this.data = rows;
+        this.fire(this.loadEvent, this);
+      }
+
+    });
+
+  </script>
+
+</polymer-element>
+
+<!--
+`d3` CSV loader element
+
+Element wrapper for the `d3` (http://d3js.org/) library.
+
+@class d3-csv
+@blurb `d3` CSV loader element.
+@status alpha
+@snap snap.png
+-->
+<polymer-element name="d3-csv" extends="d3-loader-base">
+
+  <script>
+
+    Polymer('d3-csv', {
+
+      sendRequest: function() {
+        d3.csv(this.url, this.accessor.bind(this), this.receive.bind(this));
+      }
+
+    });
+
+  </script>
+
+</polymer-element>
+
+<!--
+`d3` TSV loader element
+
+Element wrapper for the `d3` (http://d3js.org/) library.
+
+@class d3-tsv
+@blurb `d3` TSV loader element.
+@status alpha
+@snap snap.png
+-->
+<polymer-element name="d3-tsv" extends="d3-loader-base">
+
+  <script>
+
+    Polymer('d3-tsv', {
+
+      sendRequest: function() {
+        d3.tsv(this.url, this.accessor.bind(this), this.receive.bind(this));
+      }
+
+    });
+
+  </script>
+
+</polymer-element>
