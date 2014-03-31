@@ -1,5 +1,5 @@
 {
-  "name": "d3-element",
+  "name": "d3-elements",
   "private": true,
   "dependencies": {
     "polymer": "Polymer/polymer#master",
